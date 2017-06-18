@@ -20,6 +20,7 @@ public class Hash<K, V> implements HashI<K, V> {
     //Construtor da classe
     public Hash(int tamTabela) {
         this.tamTabela = tamTabela;
+        //Como não se pode criar uma nova Lista Ligada genérica, utiliza-se um cast
         this.listaHash = (LinkedList<HashElement<K, V>>[]) new LinkedList[tamTabela];
         for (int i = 0; i < tamTabela; i++) {
             this.listaHash[i] = new LinkedList<HashElement<K, V>>();
