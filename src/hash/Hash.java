@@ -81,11 +81,13 @@ public class Hash<K, V> implements HashI<K, V> {
 
     private void resize(int tamNovo) {
         //Cria nova listaHash com o dobro do tamanho
-        LinkedList<HashElement<K, V>>[] novaHash = (LinkedList<HashElement<K, V>>[]) new LinkedList[tamTabela];
+        LinkedList<HashElement<K, V>>[] novaHash = (LinkedList<HashElement<K, V>>[]) new LinkedList[tamNovo];
+        
+        //Inicializa novaHash
         for (int i = 0; i < tamNovo; i++)
             novaHash[i] = new LinkedList<HashElement<K, V>>();
         
-        //Copia os valores de listaHash antida para a nova tabela Hash
+        //Copia os valores de listaHash antiga para a nova tabela Hash
         for(K chave: this){
             V valor = pesquisar(chave);
             HashElement<K, V> elemHash = new HashElement<K, V>(chave, valor);
