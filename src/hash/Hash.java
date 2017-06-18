@@ -23,7 +23,6 @@ public class Hash<K, V> implements HashI<K, V> {
         this.listaHash = (LinkedList<HashElement<K, V>>[]) new LinkedList[tamTabela];
         for (int i = 0; i < tamTabela; i++) {
             this.listaHash[i] = new LinkedList<HashElement<K, V>>();
-
         }
         this.fatorCargaMax = 0.75;
         this.size = 0;
@@ -37,14 +36,16 @@ public class Hash<K, V> implements HashI<K, V> {
 //        }
         //Cria o novo objeto a ser inserido na tabela Hash
         HashElement<K, V> novoElem = new HashElement(chave, valor);
-        //Índice - busca o hashCode referente a chave inserida
+        //Índice - busca o hashCode referente a chave inserida. "Hash Function".
         int valorHash = chave.hashCode();
-        System.out.println(valorHash);
+        
 
         //Transforma em positivo
-        valorHash &= 0x7FFFFFFF;
+        if(valorHash < 0)
+            valorHash *= -1;
         //O resto da divisão com o tamanho da tabela será o index do novo elemento
         valorHash %= tamTabela;
+        System.out.println(valorHash);
         //Insere o novo elemento na Lista encadeada correspondente
         listaHash[valorHash].add(novoElem);
         size++;
@@ -90,12 +91,12 @@ public class Hash<K, V> implements HashI<K, V> {
         }
 
         //Copia os valores de listaHash antiga para a nova tabela Hash
-        for (K chave : this) {
-            V valor = pesquisar(chave);
-            HashElement<K, V> elemHash = new HashElement<K, V>(chave, valor);
-            int valorHash = (chave.hashCode() & 0x7FFFFFFF) % tamNovo;
-            novaHash[valorHash].add(elemHash);
-        }
+//        for (K chave : this) {
+//            V valor = pesquisar(chave);
+//            HashElement<K, V> elemHash = new HashElement<K, V>(chave, valor);
+//            int valorHash = (chave.hashCode() & 0x7FFFFFFF) % tamNovo;
+//            novaHash[valorHash].add(elemHash);
+//        }
         //A tabela Hash antiga é atualizada para a nova tabela Hash
         listaHash = novaHash;
         //O tamanho da tabela recebe o tamanho novo
@@ -110,5 +111,6 @@ public class Hash<K, V> implements HashI<K, V> {
             }
         }
     }
+
 
 }
