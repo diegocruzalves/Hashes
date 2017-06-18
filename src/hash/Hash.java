@@ -17,14 +17,13 @@ public class Hash<K, V> implements HashI<K, V> {
     double fatorCargaMax;
     LinkedList<HashElement<K, V>>[] listaHash;
 
-    
     //Construtor da classe
     public Hash(int tamTabela) {
         this.tamTabela = tamTabela;
         this.listaHash = (LinkedList<HashElement<K, V>>[]) new LinkedList[tamTabela];
         for (int i = 0; i < tamTabela; i++) {
             this.listaHash[i] = new LinkedList<HashElement<K, V>>();
-            
+
         }
         this.fatorCargaMax = 0.75;
         this.size = 0;
@@ -32,14 +31,16 @@ public class Hash<K, V> implements HashI<K, V> {
 
     public void inserir(K chave, V valor) {
         //Verifica o tamanho do tabela Hash
-        if (fatorDeCarga() > fatorCargaMax) {
-            //Se ultrapassar o fato de carga máximo, dobra o tamanho da Tabela Hash
-            resize(tamTabela * 2);
-        }
+//        if (fatorDeCarga() > fatorCargaMax) {
+//            //Se ultrapassar o fato de carga máximo, dobra o tamanho da Tabela Hash
+//            //resize(tamTabela * 2);
+//        }
         //Cria o novo objeto a ser inserido na tabela Hash
         HashElement<K, V> novoElem = new HashElement(chave, valor);
         //Índice - busca o hashCode referente a chave inserida
         int valorHash = chave.hashCode();
+        System.out.println(valorHash);
+
         //Transforma em positivo
         valorHash &= 0x7FFFFFFF;
         //O resto da divisão com o tamanho da tabela será o index do novo elemento
@@ -75,20 +76,21 @@ public class Hash<K, V> implements HashI<K, V> {
         return null;
     }
 
-    private double fatorDeCarga() {
-        return size/tamTabela;
+    public double fatorDeCarga() {
+        return size / tamTabela;
     }
 
-    private void resize(int tamNovo) {
+    public void resize(int tamNovo) {
         //Cria nova listaHash com o dobro do tamanho
         LinkedList<HashElement<K, V>>[] novaHash = (LinkedList<HashElement<K, V>>[]) new LinkedList[tamNovo];
-        
+
         //Inicializa novaHash
-        for (int i = 0; i < tamNovo; i++)
+        for (int i = 0; i < tamNovo; i++) {
             novaHash[i] = new LinkedList<HashElement<K, V>>();
-        
+        }
+
         //Copia os valores de listaHash antiga para a nova tabela Hash
-        for(K chave: this){
+        for (K chave : this) {
             V valor = pesquisar(chave);
             HashElement<K, V> elemHash = new HashElement<K, V>(chave, valor);
             int valorHash = (chave.hashCode() & 0x7FFFFFFF) % tamNovo;
@@ -99,12 +101,14 @@ public class Hash<K, V> implements HashI<K, V> {
         //O tamanho da tabela recebe o tamanho novo
         tamTabela = tamNovo;
     }
-    
-    public void imprimeHash(){
-        System.out.println("Tabela Hash");
-        for(int i=0; i< tamTabela; i++)
-            if(listaHash[i] != null)
+
+    public void imprimeHash() {
+        System.out.println("Tabela Hash:");
+        for (int i = 0; i < tamTabela; i++) {
+            if (listaHash[i] != null) {
                 System.out.println(listaHash[i].get(i).chave + "\t" + listaHash[i].get(i).valor);
+            }
+        }
     }
 
 }
