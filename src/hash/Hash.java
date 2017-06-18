@@ -39,8 +39,6 @@ public class Hash<K, V> implements HashI<K, V> {
         HashElement<K, V> novoElem = new HashElement(chave, valor);
         //Índice - busca o hashCode referente a chave inserida. "Hash Function".
         int valorHash = chave.hashCode();
-        
-
         //Transforma em positivo
         if(valorHash < 0)
             valorHash *= -1;
@@ -56,7 +54,8 @@ public class Hash<K, V> implements HashI<K, V> {
         //Encontra o índice da chave informada
         int valorHash = chave.hashCode();
         //Transforma em positivo
-        valorHash &= 0x7FFFFFFF;
+        if(valorHash < 0)
+            valorHash *= -1;
         valorHash %= tamTabela;
 
         //Remove da Lista encadeada
@@ -67,7 +66,8 @@ public class Hash<K, V> implements HashI<K, V> {
     public V pesquisar(K chave) {
         //Encontra o índice da chave informada
         int valorHash = chave.hashCode();
-        valorHash &= 0x7FFFFFFF;
+        if(valorHash < 0)
+            valorHash *= -1;
         valorHash %= tamTabela;
 
         //Iterador
@@ -107,9 +107,7 @@ public class Hash<K, V> implements HashI<K, V> {
     public void imprimeHash() {
         System.out.println("Tabela Hash:");
         for (int i = 0; i < tamTabela; i++) {
-            if (listaHash[i] != null) {
-                System.out.println(listaHash[i].get(i).chave + "\t" + listaHash[i].get(i).valor);
-            }
+                System.out.println(listaHash[i].get(i).chave);
         }
     }
 
