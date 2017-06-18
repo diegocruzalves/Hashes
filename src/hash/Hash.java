@@ -17,11 +17,14 @@ public class Hash<K, V> implements HashI<K, V> {
     double fatorCargaMax;
     LinkedList<HashElement<K, V>>[] listaHash;
 
+    
+    //Construtor da classe
     public Hash(int tamTabela) {
         this.tamTabela = tamTabela;
         this.listaHash = (LinkedList<HashElement<K, V>>[]) new LinkedList[tamTabela];
         for (int i = 0; i < tamTabela; i++) {
             this.listaHash[i] = new LinkedList<HashElement<K, V>>();
+            
         }
         this.fatorCargaMax = 0.75;
         this.size = 0;
@@ -35,30 +38,31 @@ public class Hash<K, V> implements HashI<K, V> {
         }
         //Cria o novo objeto a ser inserido na tabela Hash
         HashElement<K, V> novoElem = new HashElement(chave, valor);
-        //Index - busca o hashCode referente a chave inserida
+        //Índice - busca o hashCode referente a chave inserida
         int valorHash = chave.hashCode();
         //Transforma em positivo
         valorHash &= 0x7FFFFFFF;
         //O resto da divisão com o tamanho da tabela será o index do novo elemento
         valorHash %= tamTabela;
-        //Lista encadeada
+        //Insere o novo elemento na Lista encadeada correspondente
         listaHash[valorHash].add(novoElem);
         size++;
     }
 
     public void remover(K chave, V valor) {
-        //Index
+        //Encontra o índice da chave informada
         int valorHash = chave.hashCode();
+        //Transforma em positivo
         valorHash &= 0x7FFFFFFF;
         valorHash %= tamTabela;
 
-        //Lista encadeada
+        //Remove da Lista encadeada
         listaHash[valorHash].remove();
         size--;
     }
 
     public V pesquisar(K chave) {
-        //Index
+        //Encontra o índice da chave informada
         int valorHash = chave.hashCode();
         valorHash &= 0x7FFFFFFF;
         valorHash %= tamTabela;
