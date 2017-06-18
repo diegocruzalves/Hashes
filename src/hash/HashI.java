@@ -9,6 +9,16 @@ package hash;
  *
  * @author diegocruzalves
  */
-interface HashI<T0, T1> {
-    
+interface HashI<K, V> {
+
+    public void inserir(K chave, V valor);
+
+    public void remover(K chave, V valor);
+
+    public V pesquisar(K chave);
+
+    public double fatorDeCarga();
+
+    public void resize(int tamNovo);
+
 }

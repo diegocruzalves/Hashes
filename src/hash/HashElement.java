@@ -5,23 +5,25 @@
  */
 package hash;
 
+import java.util.Objects;
+
 /**
  *
  * @author diegocruzalves
  */
-public class HashElement<K, V> implements Comparable<HashElement<K, V>>{
-    
+public class HashElement<K, V> implements Comparable<HashElement<K, V>> {
+
     K chave;
     V valor;
-    
-    public HashElement(K chave, V valor){
+
+    public HashElement(K chave, V valor) {
         this.chave = chave;
         this.valor = valor;
     }
 
     @Override
     public int compareTo(HashElement<K, V> o) {
-       return (((Comparable<K>)this.chave).compareTo(o.chave));
+        return (((Comparable<K>) this.chave).compareTo(o.chave));
     }
-    
+
 }
