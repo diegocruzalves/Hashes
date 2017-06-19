@@ -13,10 +13,19 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Hash<String, Integer> hash = new Hash<String, Integer>(4);
-        hash.inserir("Fulano", 10);
-        hash.inserir("Cicrano", 99);
+        Hash<String, Integer> hash = new Hash<String, Integer>(10);
+        hash.inserir("Arroz", 3);
+        hash.inserir("Feijao", 12);
+        hash.inserir("Carne", 30);
+        hash.inserir("Abobora", 8);
+        hash.inserir("Abacaxi", 4);
+        hash.inserir("Chocolate", 7);
         
+        hash.imprimeHash();
+        
+        System.out.println("Resultado da pesquisa por \"Arroz\":"  + hash.pesquisar("Arroz"));
+        
+        hash.remover("Arroz", 3);
         hash.imprimeHash();
         
     }

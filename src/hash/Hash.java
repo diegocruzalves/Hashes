@@ -46,7 +46,6 @@ public class Hash<K, V> implements HashI<K, V> {
         }
         //O resto da divisão com o tamanho da tabela será o index do novo elemento
         valorHash %= tamTabela;
-        System.out.println(valorHash);
         //Insere o novo elemento na Lista encadeada correspondente
         listaHash[valorHash].add(novoElem);
         size++;
@@ -89,7 +88,6 @@ public class Hash<K, V> implements HashI<K, V> {
     public void resize(int tamNovo) {
         //Cria nova listaHash com o dobro do tamanho
         LinkedList<HashElement<K, V>>[] novaHash = (LinkedList<HashElement<K, V>>[]) new LinkedList[tamNovo];
-
         //Inicializa novaHash
         for (int i = 0; i < tamNovo; i++) {
             novaHash[i] = new LinkedList<HashElement<K, V>>();
@@ -112,13 +110,6 @@ public class Hash<K, V> implements HashI<K, V> {
                 chaves[p++] = h.chave;
             }
         }
-
-//        for (K chave : this) {
-//            V valor = pesquisar(chave);
-//            HashElement<K, V> elemHash = new HashElement<K, V>(chave, valor);
-//            int valorHash = (chave.hashCode() & 0x7FFFFFFF) % tamNovo;
-//            novaHash[valorHash].add(elemHash);
-//        }
         //A tabela Hash antiga é atualizada para a nova tabela Hash
         listaHash = novaHash;
         //O tamanho da tabela recebe o tamanho novo
@@ -126,6 +117,8 @@ public class Hash<K, V> implements HashI<K, V> {
     }
 
     public void imprimeHash() {
+        System.out.printf("%-6s || %-10s || %s\n", "Índice", "Chave", "Valor");
+        System.out.println("----------------------------");
 
         K[] chaves = (K[]) new Object[size];
         int p = 0;
@@ -133,7 +126,7 @@ public class Hash<K, V> implements HashI<K, V> {
             LinkedList<HashElement<K, V>> lista = listaHash[i];
             for (HashElement<K, V> h : lista) {
                 chaves[p++] = h.chave;
-                System.out.println(h.chave + "\t" + h.valor);
+                System.out.printf("%-6s || %-10s || %s\n", listaHash[i].indexOf(h), h.chave, h.valor);
             }
         }
     }
