@@ -14,11 +14,11 @@ public class Main {
     public static void main(String[] args) {
 
         Hash<String, Integer> hash = new Hash<String, Integer>(4);
-        hash.inserir("Fulano", 1);
-        hash.inserir("Cicrano", 3);
+        hash.inserir("Fulano", 10);
+        hash.inserir("Cicrano", 99);
         
-        System.out.println("Pesquisa Cicrano");
-        System.out.println(hash.pesquisar("Cicrano"));
+        hash.imprimeHash();
+        
     }
 
 }

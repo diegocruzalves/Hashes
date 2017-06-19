@@ -9,7 +9,7 @@ package hash;
  *
  * @author diegocruzalves
  */
-interface HashI<K, V> {
+public interface HashI<K, V> {
 
     public void inserir(K chave, V valor);
 

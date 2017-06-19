@@ -6,6 +6,7 @@
 package hash;
 
 import java.util.LinkedList;
+import java.lang.Object;
 
 /**
  *
@@ -31,17 +32,18 @@ public class Hash<K, V> implements HashI<K, V> {
 
     public void inserir(K chave, V valor) {
         //Verifica o tamanho do tabela Hash
-//        if (fatorDeCarga() > fatorCargaMax) {
-//            //Se ultrapassar o fato de carga máximo, dobra o tamanho da Tabela Hash
-//            //resize(tamTabela * 2);
-//        }
+        if (fatorDeCarga() > fatorCargaMax) {
+            //Se ultrapassar o fato de carga máximo, dobra o tamanho da Tabela Hash
+            resize(tamTabela * 2);
+        }
         //Cria o novo objeto a ser inserido na tabela Hash
         HashElement<K, V> novoElem = new HashElement(chave, valor);
         //Índice - busca o hashCode referente a chave inserida. "Hash Function".
         int valorHash = chave.hashCode();
         //Transforma em positivo
-        if(valorHash < 0)
+        if (valorHash < 0) {
             valorHash *= -1;
+        }
         //O resto da divisão com o tamanho da tabela será o index do novo elemento
         valorHash %= tamTabela;
         System.out.println(valorHash);
@@ -54,8 +56,9 @@ public class Hash<K, V> implements HashI<K, V> {
         //Encontra o índice da chave informada
         int valorHash = chave.hashCode();
         //Transforma em positivo
-        if(valorHash < 0)
+        if (valorHash < 0) {
             valorHash *= -1;
+        }
         valorHash %= tamTabela;
 
         //Remove da Lista encadeada
@@ -66,8 +69,9 @@ public class Hash<K, V> implements HashI<K, V> {
     public V pesquisar(K chave) {
         //Encontra o índice da chave informada
         int valorHash = chave.hashCode();
-        if(valorHash < 0)
+        if (valorHash < 0) {
             valorHash *= -1;
+        }
         valorHash %= tamTabela;
 
         //Iterador
@@ -92,6 +96,23 @@ public class Hash<K, V> implements HashI<K, V> {
         }
 
         //Copia os valores de listaHash antiga para a nova tabela Hash
+        K[] chaves = (K[]) new Object[size];
+        int p = 0;
+        for (int i = 0; i < tamTabela; i++) {
+            LinkedList<HashElement<K, V>> lista = listaHash[i];
+            for (HashElement<K, V> h : lista) {
+                V valor = pesquisar(h.chave);
+                HashElement<K, V> elemHash = new HashElement<K, V>(h.chave, h.valor);
+                int valorHash = h.chave.hashCode();
+                if (valorHash < 0) {
+                    valorHash *= -1;
+                }
+                valorHash %= tamTabela;
+                novaHash[valorHash].add(elemHash);
+                chaves[p++] = h.chave;
+            }
+        }
+
 //        for (K chave : this) {
 //            V valor = pesquisar(chave);
 //            HashElement<K, V> elemHash = new HashElement<K, V>(chave, valor);
@@ -105,11 +126,16 @@ public class Hash<K, V> implements HashI<K, V> {
     }
 
     public void imprimeHash() {
-        System.out.println("Tabela Hash:");
+
+        K[] chaves = (K[]) new Object[size];
+        int p = 0;
         for (int i = 0; i < tamTabela; i++) {
-                System.out.println(listaHash[i].get(i).chave);
+            LinkedList<HashElement<K, V>> lista = listaHash[i];
+            for (HashElement<K, V> h : lista) {
+                chaves[p++] = h.chave;
+                System.out.println(h.chave + "\t" + h.valor);
+            }
         }
     }
-
 
 }
