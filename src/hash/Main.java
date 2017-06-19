@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Hash<String, Integer> hash = new Hash<String, Integer>(10);
+        Hash<String, Integer> hash = new Hash<String, Integer>(4);
         hash.inserir("Arroz", 3);
         hash.inserir("Feijao", 12);
         hash.inserir("Carne", 30);
@@ -23,7 +23,7 @@ public class Main {
         
         hash.imprimeHash();
         
-        System.out.println("Resultado da pesquisa por \"Arroz\":"  + hash.pesquisar("Arroz"));
+        System.out.println("Resultado da pesquisa por \"Abobora\": "  + hash.pesquisar("Abobora"));
         
         hash.remover("Arroz", 3);
         hash.imprimeHash();

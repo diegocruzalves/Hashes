@@ -44,7 +44,7 @@ public class Hash<K, V> implements HashI<K, V> {
         if (valorHash < 0) {
             valorHash *= -1;
         }
-        //O resto da divisão com o tamanho da tabela será o index do novo elemento
+        //O resto da divisão com o tamanho da tabela será o índice do novo elemento
         valorHash %= tamTabela;
         //Insere o novo elemento na Lista encadeada correspondente
         listaHash[valorHash].add(novoElem);
@@ -66,19 +66,20 @@ public class Hash<K, V> implements HashI<K, V> {
     }
 
     public V pesquisar(K chave) {
-        //Encontra o índice da chave informada
-        int valorHash = chave.hashCode();
-        if (valorHash < 0) {
-            valorHash *= -1;
-        }
-        valorHash %= tamTabela;
-
+        
         //Iterador
-        for (HashElement<K, V> elemHash : listaHash[valorHash]) {
-            if (((Comparable<K>) chave).compareTo(elemHash.chave) == 0);
-            return elemHash.valor;
+        K[] chaves = (K[]) new Object[size];
+        int p = 0;
+        for (int i = 0; i < tamTabela; i++) {
+            LinkedList<HashElement<K, V>> lista = listaHash[i];
+            for (HashElement<K, V> h : lista) {
+                chaves[p++] = h.chave;
+                if (((Comparable<K>) chave).compareTo(h.chave) == 0)
+                   return h.valor; 
+            }
         }
         return null;
+        
     }
 
     public double fatorDeCarga() {
